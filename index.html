@@ -1,49 +1,107 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState } from "react";
 
-const menu = [
-  { name: "Chicken Biryani", price: "₹220", img: "https://source.unsplash.com/400x300/?biryani" },
-  { name: "Paneer Butter Masala", price: "₹180", img: "https://source.unsplash.com/400x300/?paneer" },
-  { name: "Veg Fried Rice", price: "₹140", img: "https://source.unsplash.com/400x300/?fried-rice" },
-  { name: "Tandoori Chicken", price: "₹260", img: "https://source.unsplash.com/400x300/?tandoori" },
-  { name: "Chocolate Dessert", price: "₹120", img: "https://source.unsplash.com/400x300/?dessert" },
-  { name: "Cold Coffee", price: "₹90", img: "https://source.unsplash.com/400x300/?cold-coffee" }
-];
+const menuData = {
+  Biryani: ["Chicken Biryani","Mutton Biryani","Egg Biryani","Veg Biryani"],
+  "Non-Veg": ["Chicken Curry","Butter Chicken","Chicken Fry","Kadai Chicken"],
+  Veg: ["Paneer Butter Masala","Dal Fry","Mix Veg Curry","Aloo Curry"],
+  FastFood: ["Burger","Pizza","French Fries","Chicken 65"],
+  Desserts: ["Gulab Jamun","Ice Cream","Brownie","Rasgulla"],
+  Drinks: ["Mocktail","Cool Drinks","Milkshake","Cold Coffee"]
+};
 
-export default function RestaurantWebsite() {
+const imageMap = {
+  Biryani: "/images/biryani.jpg",
+  "Non-Veg": "/images/chicken.jpg",
+  Veg: "/images/veg.jpg",
+  FastFood: "/images/fastfood.jpg",
+  Desserts: "/images/dessert.jpg",
+  Drinks: "/images/drink.jpg"
+};
+
+export default function App() {
+  const [cart, setCart] = useState([]);
+
+  const addToCart = (item) => {
+    setCart([...cart, item]);
+  };
+
+  const total = cart.reduce((a, b) => a + b.price, 0);
+
   return (
     <div className="bg-black text-white min-h-screen">
-      {/* Hero Section */}
-      <div className="h-screen flex flex-col justify-center items-center text-center bg-cover bg-center" style={{ backgroundImage: "url('https://source.unsplash.com/1600x900/?restaurant')" }}>
-        <motion.h1 initial={{ opacity: 0, y: -50 }} animate={{ opacity: 1, y: 0 }} className="text-5xl font-bold">
-          RK Restaurant
-        </motion.h1>
-        <p className="mt-4 text-lg">Premium Taste on Highway - Narketpally</p>
-        <button className="mt-6 px-6 py-2 bg-red-600 rounded-xl">View Menu</button>
+
+      {/* Hide scrollbar */}
+      <style>{`
+        ::-webkit-scrollbar { display: none; }
+      `}</style>
+
+      {/* HERO */}
+      <div className="h-screen flex flex-col justify-center items-center">
+        <h1 className="text-6xl text-yellow-400 font-bold">RK RESTAURANT</h1>
+        <p className="text-gray-400 mt-3">Premium Highway Dining</p>
       </div>
 
-      {/* Menu Section */}
-      <div className="p-10">
-        <h2 className="text-3xl mb-6 text-center">Our Menu</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {menu.map((item, index) => (
-            <motion.div key={index} whileHover={{ scale: 1.05 }} className="bg-gray-900 rounded-2xl overflow-hidden shadow-lg">
-              <img src={item.img} alt={item.name} className="w-full h-48 object-cover" />
-              <div className="p-4">
-                <h3 className="text-xl">{item.name}</h3>
-                <p className="text-red-500">{item.price}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+      {/* MENU */}
+      <div className="px-10 space-y-16 pb-20">
+
+        {Object.keys(menuData).map((category, i) => (
+          <div key={i}>
+
+            <h2 className="text-3xl mb-6 border-b border-gray-700 pb-2">
+              {category}
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+
+              {menuData[category].map((item, j) => {
+                const price = Math.floor(100 + Math.random() * 200);
+
+                return (
+                  <div key={j} className="bg-gray-900 rounded-xl overflow-hidden">
+
+                    <img
+                      src={imageMap[category]}
+                      alt={item}
+                      className="h-40 w-full object-cover"
+                    />
+
+                    <div className="p-4">
+                      <h3>{item}</h3>
+                      <p className="text-yellow-400">₹{price}</p>
+
+                      <button
+                        onClick={() => addToCart({ name: item, price })}
+                        className="mt-2 bg-green-600 px-3 py-1 rounded"
+                      >
+                        Add
+                      </button>
+                    </div>
+
+                  </div>
+                );
+              })}
+
+            </div>
+          </div>
+        ))}
+
       </div>
 
-      {/* Contact */}
-      <div className="p-10 bg-gray-800 text-center">
-        <h2 className="text-2xl">Visit Us</h2>
-        <p>Narketpally Highway</p>
-        <p>Call: +91 98765 43210</p>
+      {/* CART */}
+      <div className="p-6 bg-gray-900">
+        <h2>Your Order</h2>
+
+        {cart.map((item, i) => (
+          <div key={i}>{item.name} - ₹{item.price}</div>
+        ))}
+
+        <p className="mt-2">Total: ₹{total}</p>
+
+        <button className="mt-4 bg-yellow-500 px-6 py-2 rounded">
+          Pre-Order & Pay
+        </button>
       </div>
+
     </div>
   );
 }
