@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
   <title>RK Restaurant</title>
   <style>
     body {
@@ -11,11 +10,21 @@
       color: white;
     }
 
-    h1 {
-      text-align: center;
-      color: gold;
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero h1 {
       font-size: 50px;
-      margin-top: 40px;
+      color: gold;
+    }
+
+    .section {
+      padding: 30px;
     }
 
     h2 {
@@ -23,13 +32,9 @@
       padding-bottom: 5px;
     }
 
-    .section {
-      padding: 20px;
-    }
-
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
       gap: 15px;
     }
 
@@ -39,10 +44,13 @@
       overflow: hidden;
     }
 
-    .card img {
-      width: 100%;
+    .img-box {
       height: 140px;
-      object-fit: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      background: #222;
     }
 
     .card div {
@@ -52,26 +60,80 @@
     .price {
       color: gold;
     }
+
+    button {
+      background: green;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      margin-top: 5px;
+      cursor: pointer;
+    }
+
+    .cart {
+      background: #111;
+      padding: 20px;
+    }
   </style>
 </head>
 
 <body>
 
-<h1>RK RESTAURANT</h1>
+<div class="hero">
+  <h1>RK RESTAURANT</h1>
+  <p>Premium Highway Dining</p>
+</div>
 
 <div id="menu"></div>
 
+<div class="cart">
+  <h2>Your Order</h2>
+  <div id="cartItems"></div>
+  <p id="total"></p>
+  <button>Pre-Order & Pay</button>
+</div>
+
 <script>
+
 const menuData = {
-  "Biryani": ["Chicken Biryani","Mutton Biryani","Egg Biryani","Veg Biryani","Paneer Biryani","Special Biryani"],
-  "Non-Veg": ["Chicken Curry","Butter Chicken","Chicken Fry","Kadai Chicken","Chicken Masala","Chicken Roast"],
-  "Veg": ["Paneer Butter Masala","Dal Fry","Mix Veg","Aloo Curry","Veg Kolhapuri","Veg Curry"],
-  "Fast Food": ["Burger","Pizza","French Fries","Sandwich","Chicken 65","Noodles"],
-  "Desserts": ["Gulab Jamun","Ice Cream","Brownie","Rasgulla","Falooda","Cake"],
-  "Drinks": ["Mocktail","Cool Drinks","Milkshake","Cold Coffee","Tea","Lemon Soda"]
+  "Biryani": ["Chicken Biryani","Mutton Biryani","Egg Biryani","Veg Biryani","Paneer Biryani"],
+  "Non-Veg": ["Chicken Curry","Butter Chicken","Kadai Chicken","Chicken Fry","Chicken Masala"],
+  "Veg": ["Paneer Butter Masala","Dal Fry","Mix Veg Curry","Aloo Curry","Veg Kolhapuri"],
+  "FastFood": ["Burger","Pizza","French Fries","Chicken 65","Sandwich"],
+  "Desserts": ["Gulab Jamun","Ice Cream","Brownie","Rasgulla","Falooda"],
+  "Drinks": ["Mocktail","Cool Drinks","Milkshake","Cold Coffee","Tea"]
 };
 
-const image = "https://picsum.photos/400/300"; // stable working
+const emojis = {
+  "Biryani": "🍛",
+  "Non-Veg": "🍗",
+  "Veg": "🥗",
+  "FastFood": "🍔",
+  "Desserts": "🍰",
+  "Drinks": "🥤"
+};
+
+let cart = [];
+
+function updateCart() {
+  let cartDiv = document.getElementById("cartItems");
+  let totalDiv = document.getElementById("total");
+
+  cartDiv.innerHTML = "";
+  let total = 0;
+
+  cart.forEach(item => {
+    cartDiv.innerHTML += `<p>${item.name} - ₹${item.price}</p>`;
+    total += item.price;
+  });
+
+  totalDiv.innerText = "Total: ₹" + total;
+}
+
+function addToCart(name, price) {
+  cart.push({name, price});
+  updateCart();
+}
 
 const menuDiv = document.getElementById("menu");
 
@@ -88,14 +150,18 @@ Object.keys(menuData).forEach(category => {
   grid.className = "grid";
 
   menuData[category].forEach(item => {
+
+    let price = Math.floor(100 + Math.random()*200);
+
     let card = document.createElement("div");
     card.className = "card";
 
     card.innerHTML = `
-      <img src="${image}?random=${Math.random()}">
+      <div class="img-box">${emojis[category]}</div>
       <div>
         <h3>${item}</h3>
-        <p class="price">₹${Math.floor(100 + Math.random()*200)}</p>
+        <p class="price">₹${price}</p>
+        <button onclick="addToCart('${item}', ${price})">Add</button>
       </div>
     `;
 
@@ -104,7 +170,9 @@ Object.keys(menuData).forEach(category => {
 
   section.appendChild(grid);
   menuDiv.appendChild(section);
+
 });
+
 </script>
 
 </body>
