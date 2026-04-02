@@ -1,80 +1,49 @@
-import React, { useState } from "react";
+import React from "react";
+import { motion } from "framer-motion";
 
-const categories = ["Biryani","Starters","Main Course","Rice & Noodles","Bread","Desserts","Drinks","Mocktails"];
-
-const MENU = [
-  { name:"Chicken Biryani", price:220, cat:"Biryani", img:"https://images.unsplash.com/photo-1604908176997-431b2a8c2d4b" },
-  { name:"Mutton Biryani", price:320, cat:"Biryani", img:"https://images.unsplash.com/photo-1596797038530-2c107229654b" },
-  { name:"Chicken 65", price:210, cat:"Starters", img:"https://images.unsplash.com/photo-1601050690117-94f5f6fa4b9b" },
-  { name:"Paneer Tikka", price:200, cat:"Starters", img:"https://images.unsplash.com/photo-1603894584373-5ac82b2ae398" },
-  { name:"Butter Chicken", price:240, cat:"Main Course", img:"https://images.unsplash.com/photo-1601050690117-94f5f6fa4b9b" },
-  { name:"Paneer Butter Masala", price:190, cat:"Main Course", img:"https://images.unsplash.com/photo-1603894584373-5ac82b2ae398" },
-  { name:"Veg Fried Rice", price:140, cat:"Rice & Noodles", img:"https://images.unsplash.com/photo-1603133872878-684f208fb84b" },
-  { name:"Chicken Noodles", price:170, cat:"Rice & Noodles", img:"https://images.unsplash.com/photo-1585032226651-759b368d7246" },
-  { name:"Butter Naan", price:40, cat:"Bread", img:"https://images.unsplash.com/photo-1601050690597-df0568f70950" },
-  { name:"Gulab Jamun", price:80, cat:"Desserts", img:"https://images.unsplash.com/photo-1625944230945-1b7dd3b9497c" },
-  { name:"Cold Drink", price:40, cat:"Drinks", img:"https://images.unsplash.com/photo-1551024709-8f23befc6f87" },
-  { name:"Mocktail", price:120, cat:"Mocktails", img:"https://images.unsplash.com/photo-1551024709-8f23befc6f87" }
+const menu = [
+  { name: "Chicken Biryani", price: "₹220", img: "https://source.unsplash.com/400x300/?biryani" },
+  { name: "Paneer Butter Masala", price: "₹180", img: "https://source.unsplash.com/400x300/?paneer" },
+  { name: "Veg Fried Rice", price: "₹140", img: "https://source.unsplash.com/400x300/?fried-rice" },
+  { name: "Tandoori Chicken", price: "₹260", img: "https://source.unsplash.com/400x300/?tandoori" },
+  { name: "Chocolate Dessert", price: "₹120", img: "https://source.unsplash.com/400x300/?dessert" },
+  { name: "Cold Coffee", price: "₹90", img: "https://source.unsplash.com/400x300/?cold-coffee" }
 ];
 
-export default function PremiumRestaurantUI(){
-  const [cart,setCart]=useState([]);
-  const [activeCat,setActiveCat]=useState("Biryani");
-
-  const filtered = MENU.filter(i=>i.cat===activeCat);
-  const total = cart.reduce((s,i)=>s+i.price,0);
-
+export default function RestaurantWebsite() {
   return (
-    <div className="bg-black text-white min-h-screen flex">
-
-      {/* SIDEBAR */}
-      <div className="w-64 bg-gradient-to-b from-black to-gray-900 p-4">
-        <h1 className="text-3xl font-bold text-yellow-400 mb-6">RK Restaurant</h1>
-        {categories.map(c=>(
-          <div key={c} onClick={()=>setActiveCat(c)} className={`p-3 mb-2 rounded cursor-pointer ${activeCat===c?"bg-yellow-500 text-black":"bg-gray-800"}`}>
-            {c}
-          </div>
-        ))}
+    <div className="bg-black text-white min-h-screen">
+      {/* Hero Section */}
+      <div className="h-screen flex flex-col justify-center items-center text-center bg-cover bg-center" style={{ backgroundImage: "url('https://source.unsplash.com/1600x900/?restaurant')" }}>
+        <motion.h1 initial={{ opacity: 0, y: -50 }} animate={{ opacity: 1, y: 0 }} className="text-5xl font-bold">
+          RK Restaurant
+        </motion.h1>
+        <p className="mt-4 text-lg">Premium Taste on Highway - Narketpally</p>
+        <button className="mt-6 px-6 py-2 bg-red-600 rounded-xl">View Menu</button>
       </div>
 
-      {/* MAIN */}
-      <div className="flex-1 p-6">
-
-        {/* HEADER */}
-        <div className="mb-6 border-b border-gray-700 pb-4">
-          <h2 className="text-4xl font-bold text-yellow-400">RK Restaurant</h2>
-          <p className="text-gray-400">Premium Dining Experience</p>
-        </div>
-
-        {/* MENU LIST */}
-        <div className="grid md:grid-cols-2 gap-6">
-          {filtered.map((item,i)=>(
-            <div key={i} className="flex bg-gray-900 rounded-xl overflow-hidden shadow-lg">
-              <img src={item.img} className="w-40 h-32 object-cover"/>
-              <div className="p-4 flex-1">
-                <h3 className="text-lg font-semibold">{item.name}</h3>
-                <p className="text-yellow-400">₹{item.price}</p>
-                <button onClick={()=>setCart([...cart,item])} className="mt-2 bg-yellow-500 text-black px-4 py-1 rounded">Add to Cart</button>
+      {/* Menu Section */}
+      <div className="p-10">
+        <h2 className="text-3xl mb-6 text-center">Our Menu</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {menu.map((item, index) => (
+            <motion.div key={index} whileHover={{ scale: 1.05 }} className="bg-gray-900 rounded-2xl overflow-hidden shadow-lg">
+              <img src={item.img} alt={item.name} className="w-full h-48 object-cover" />
+              <div className="p-4">
+                <h3 className="text-xl">{item.name}</h3>
+                <p className="text-red-500">{item.price}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
-
       </div>
 
-      {/* CART */}
-      <div className="w-80 bg-gray-900 p-4">
-        <h2 className="text-2xl mb-4">Cart</h2>
-        {cart.map((c,i)=>(
-          <div key={i} className="flex justify-between mb-2">
-            <span>{c.name}</span>
-            <span>₹{c.price}</span>
-          </div>
-        ))}
-        <div className="mt-4 border-t pt-2">Total: ₹{total}</div>
-        <button className="mt-4 bg-yellow-500 text-black w-full py-2 rounded">Checkout</button>
+      {/* Contact */}
+      <div className="p-10 bg-gray-800 text-center">
+        <h2 className="text-2xl">Visit Us</h2>
+        <p>Narketpally Highway</p>
+        <p>Call: +91 98765 43210</p>
       </div>
-
     </div>
   );
 }
