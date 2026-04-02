@@ -1,79 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RK Restaurant</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial;
-      background: black;
-      color: white;
-    }
+    body { margin:0; font-family: Arial; background:#000; color:#fff; }
 
-    .hero {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
+    .hero { height:90vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; background: radial-gradient(circle,#1a1a1a,#000); }
+    .hero h1 { font-size:55px; color:gold; }
+    .hero p { color:#aaa; }
 
-    .hero h1 {
-      font-size: 50px;
-      color: gold;
-    }
+    .nav { position:sticky; top:0; background:#000; display:flex; gap:15px; padding:10px; overflow-x:auto; border-bottom:1px solid #222; }
+    .nav a { color:#ccc; text-decoration:none; }
+    .nav a:hover { color:gold; }
 
-    .section {
-      padding: 30px;
-    }
+    .section { padding:25px; }
+    h2 { border-bottom:1px solid #333; padding-bottom:5px; }
 
-    h2 {
-      border-bottom: 1px solid gray;
-      padding-bottom: 5px;
-    }
+    .grid { display:grid; grid-template-columns: repeat(auto-fill,minmax(200px,1fr)); gap:15px; }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
-      gap: 15px;
-    }
+    .card { background:#111; border-radius:12px; overflow:hidden; transition:0.3s; }
+    .card:hover { transform:scale(1.05); }
 
-    .card {
-      background: #111;
-      border-radius: 10px;
-      overflow: hidden;
-    }
+    .img { height:140px; display:flex; align-items:center; justify-content:center; font-size:40px; background:#222; }
 
-    .img-box {
-      height: 140px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 40px;
-      background: #222;
-    }
+    .card div { padding:10px; }
+    .price { color:gold; }
 
-    .card div {
-      padding: 10px;
-    }
+    button { background:green; color:white; border:none; padding:6px 10px; cursor:pointer; }
 
-    .price {
-      color: gold;
-    }
+    .cart { background:#111; padding:20px; }
 
-    button {
-      background: green;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      margin-top: 5px;
-      cursor: pointer;
-    }
-
-    .cart {
-      background: #111;
-      padding: 20px;
-    }
+    .reviews { padding:20px; }
+    .review { background:#111; padding:10px; margin-bottom:10px; border-radius:8px; }
   </style>
 </head>
 
@@ -81,98 +41,81 @@
 
 <div class="hero">
   <h1>RK RESTAURANT</h1>
-  <p>Premium Highway Dining</p>
+  <p>Premium Highway Dining Experience</p>
 </div>
 
+<div class="nav" id="nav"></div>
 <div id="menu"></div>
 
 <div class="cart">
   <h2>Your Order</h2>
   <div id="cartItems"></div>
   <p id="total"></p>
+  <input type="time" />
+  <br><br>
   <button>Pre-Order & Pay</button>
 </div>
 
-<script>
+<div class="reviews">
+  <h2>Customer Reviews</h2>
+  <div class="review">⭐️⭐️⭐️⭐️⭐️ Amazing food!</div>
+  <div class="review">⭐️⭐️⭐️⭐️ Great experience</div>
+  <div class="review">⭐️⭐️⭐️⭐️⭐️ Loved it</div>
+</div>
 
+<script>
 const menuData = {
-  "Biryani": ["Chicken Biryani","Mutton Biryani","Egg Biryani","Veg Biryani","Paneer Biryani"],
-  "Non-Veg": ["Chicken Curry","Butter Chicken","Kadai Chicken","Chicken Fry","Chicken Masala"],
-  "Veg": ["Paneer Butter Masala","Dal Fry","Mix Veg Curry","Aloo Curry","Veg Kolhapuri"],
-  "FastFood": ["Burger","Pizza","French Fries","Chicken 65","Sandwich"],
-  "Desserts": ["Gulab Jamun","Ice Cream","Brownie","Rasgulla","Falooda"],
-  "Drinks": ["Mocktail","Cool Drinks","Milkshake","Cold Coffee","Tea"]
+  Biryani:["Chicken Biryani","Mutton Biryani","Egg Biryani","Veg Biryani","Paneer Biryani"],
+  "Non-Veg":["Chicken Curry","Butter Chicken","Chicken Fry","Kadai Chicken","Chicken Masala"],
+  Veg:["Paneer Butter Masala","Dal Fry","Mix Veg","Aloo Curry","Veg Kolhapuri"],
+  FastFood:["Burger","Pizza","Fries","Sandwich","Chicken 65"],
+  Desserts:["Gulab Jamun","Ice Cream","Brownie","Rasgulla","Falooda"],
+  Drinks:["Mocktail","Cool Drinks","Milkshake","Cold Coffee","Tea"]
 };
 
-const emojis = {
-  "Biryani": "🍛",
-  "Non-Veg": "🍗",
-  "Veg": "🥗",
-  "FastFood": "🍔",
-  "Desserts": "🍰",
-  "Drinks": "🥤"
+const emoji = {
+  Biryani:"🍛", "Non-Veg":"🍗", Veg:"🥗", FastFood:"🍔", Desserts:"🍰", Drinks:"🥤"
 };
 
 let cart = [];
 
-function updateCart() {
-  let cartDiv = document.getElementById("cartItems");
-  let totalDiv = document.getElementById("total");
-
-  cartDiv.innerHTML = "";
-  let total = 0;
-
-  cart.forEach(item => {
-    cartDiv.innerHTML += `<p>${item.name} - ₹${item.price}</p>`;
-    total += item.price;
-  });
-
-  totalDiv.innerText = "Total: ₹" + total;
+function updateCart(){
+  let c=document.getElementById("cartItems");
+  let t=document.getElementById("total");
+  c.innerHTML=""; let total=0;
+  cart.forEach(i=>{ c.innerHTML+=`<p>${i.name} - ₹${i.price}</p>`; total+=i.price; });
+  t.innerText="Total: ₹"+total;
 }
 
-function addToCart(name, price) {
-  cart.push({name, price});
-  updateCart();
-}
+function add(name,price){ cart.push({name,price}); updateCart(); }
 
-const menuDiv = document.getElementById("menu");
+const menu=document.getElementById("menu");
+const nav=document.getElementById("nav");
 
-Object.keys(menuData).forEach(category => {
+Object.keys(menuData).forEach(cat=>{
+  let link=document.createElement("a"); link.href="#"+cat; link.innerText=cat; nav.appendChild(link);
 
-  let section = document.createElement("div");
-  section.className = "section";
+  let sec=document.createElement("div"); sec.className="section"; sec.id=cat;
+  let h=document.createElement("h2"); h.innerText=cat; sec.appendChild(h);
 
-  let title = document.createElement("h2");
-  title.innerText = category;
-  section.appendChild(title);
+  let grid=document.createElement("div"); grid.className="grid";
 
-  let grid = document.createElement("div");
-  grid.className = "grid";
-
-  menuData[category].forEach(item => {
-
-    let price = Math.floor(100 + Math.random()*200);
-
-    let card = document.createElement("div");
-    card.className = "card";
-
-    card.innerHTML = `
-      <div class="img-box">${emojis[category]}</div>
+  menuData[cat].forEach(item=>{
+    let price=Math.floor(100+Math.random()*200);
+    let card=document.createElement("div"); card.className="card";
+    card.innerHTML=`
+      <div class="img">${emoji[cat]}</div>
       <div>
         <h3>${item}</h3>
         <p class="price">₹${price}</p>
-        <button onclick="addToCart('${item}', ${price})">Add</button>
-      </div>
-    `;
-
+        <button onclick="add('${item}',${price})">Add</button>
+      </div>`;
     grid.appendChild(card);
   });
 
-  section.appendChild(grid);
-  menuDiv.appendChild(section);
-
+  sec.appendChild(grid);
+  menu.appendChild(sec);
 });
-
 </script>
 
 </body>
