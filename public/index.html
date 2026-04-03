@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RK Restaurant</title>
+  <style>
+    body { background:black; color:gold; text-align:center; font-family:Arial; }
+    button { background:gold; color:black; padding:10px; margin:5px; }
+    input { margin:5px; padding:8px; }
+  </style>
+</head>
+<body>
+
+<h1>RK Restaurant</h1>
+<p>NH67 Narketpally Highway</p>
+
+<h2>Pre-Order</h2>
+<input id="name" placeholder="Your Name">
+<input id="items" placeholder="Items">
+<button onclick="order()">Order</button>
+<p id="result"></p>
+
+<h2>Check Order</h2>
+<input id="oid" placeholder="Order ID">
+<button onclick="status()">Check</button>
+<p id="status"></p>
+
+<h2>Reserve Table</h2>
+<input id="rname" placeholder="Name">
+<input id="people" placeholder="People">
+<button onclick="reserve()">Reserve</button>
+
+<script>
+async function order(){
+  const res = await fetch("/order",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      name:document.getElementById("name").value,
+      items:document.getElementById("items").value
+    })
+  });
+  const data = await res.json();
+  document.getElementById("result").innerText="Order ID: "+data.order.id;
+}
+
+async function status(){
+  const id=document.getElementById("oid").value;
+  const res=await fetch("/order/"+id);
+  const data=await res.json();
+  document.getElementById("status").innerText=data.status||"Not found";
+}
+
+async function reserve(){
+  await fetch("/reserve",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      name:document.getElementById("rname").value,
+      people:document.getElementById("people").value
+    })
+  });
+  alert("Reserved!");
+}
+</script>
+
+</body>
+</html>
