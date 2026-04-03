@@ -15,19 +15,32 @@ body{
   color:white;
 }
 
-/* NAVBAR */
+/* HERO */
+.hero{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  background:url('https://source.unsplash.com/1600x900/?luxury-restaurant') center/cover;
+}
+.hero h1{
+  font-size:70px;
+  color:gold;
+}
+.hero p{
+  font-size:22px;
+}
+
+/* NAV */
 nav{
+  position:sticky;
+  top:0;
   background:#000;
-  padding:15px;
+  padding:10px;
   text-align:center;
   border-bottom:1px solid gold;
-}
-nav h1{
-  color:gold;
-  letter-spacing:2px;
-}
-nav span{
-  font-size:20px;
 }
 
 /* SECTION */
@@ -56,7 +69,7 @@ nav span{
 }
 .card img{
   width:100%;
-  height:160px;
+  height:150px;
   object-fit:cover;
 }
 .card-content{
@@ -85,11 +98,27 @@ button{
   border-radius:10px;
 }
 
+/* FORM */
+.form{
+  max-width:400px;
+  margin:auto;
+  background:#111;
+  padding:20px;
+  border-radius:10px;
+}
+input,select{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  border:none;
+  border-radius:6px;
+}
+
 /* REVIEWS */
 .review{
   background:#111;
   padding:15px;
-  margin:10px;
+  margin:10px 0;
   border-radius:10px;
 }
 
@@ -101,25 +130,58 @@ h2{
 
 <body>
 
-<nav>
-<h1>🍽️ RK RESTAURANT 🍴</h1>
-<span>⭐⭐⭐⭐⭐ Premium Dining Experience</span>
-</nav>
+<!-- HERO -->
+<div class="hero">
+<h1>🍽️ RK Restaurant</h1>
+<p>Luxury Dining • Premium Taste • NH65</p>
+</div>
 
+<nav>⭐⭐⭐⭐⭐ Rated Premium Restaurant</nav>
+
+<!-- MENU -->
 <div class="section">
-<h2>🍛 MENU (50+ ITEMS)</h2>
+<h1 style="text-align:center;color:gold;">OUR MENU</h1>
+<div id="menu"></div>
+</div>
 
-<div class="grid" id="menu"></div>
+<!-- ORDER -->
+<div class="section">
+<h2>🧾 Pre-Order & Table Reservation</h2>
+
+<div class="form">
+<form onsubmit="confirmOrder(event)">
+
+<label><input type="checkbox" id="preorder"> Pre-Order (100% Advance)</label>
+
+<label><input type="checkbox" id="tableToggle"> Table Reservation</label>
+
+<div id="tableBox" style="display:none;">
+<input placeholder="No. of People">
+<select>
+<option>Lunch</option>
+<option>Dinner</option>
+</select>
+</div>
+
+<select required>
+<option>Payment Method</option>
+<option>UPI</option>
+<option>Cash</option>
+<option>Card</option>
+</select>
+
+<button>Confirm</button>
+
+</form>
+</div>
 </div>
 
 <!-- REVIEWS -->
 <div class="section">
 <h2>⭐ Customer Reviews</h2>
-
-<div class="review">⭐⭐⭐⭐⭐ Amazing food and service!</div>
-<div class="review">⭐⭐⭐⭐ Best biryani in town 🔥</div>
-<div class="review">⭐⭐⭐⭐⭐ Premium ambience & taste</div>
-
+<div class="review">⭐⭐⭐⭐⭐ Excellent taste & ambience</div>
+<div class="review">⭐⭐⭐⭐ Best service on highway</div>
+<div class="review">⭐⭐⭐⭐⭐ Worth every rupee</div>
 </div>
 
 <!-- CART -->
@@ -135,36 +197,22 @@ let cart=[];
 let total=0;
 
 /* 50+ ITEMS */
-const items=[
-["Chicken Biryani",220],["Mutton Biryani",280],["Egg Biryani",180],
-["Paneer Biryani",190],["Veg Biryani",160],
-["Chicken 65",180],["Chilli Chicken",200],["Dragon Chicken",220],
-["Paneer Tikka",160],["Gobi Manchurian",140],
-["Veg Noodles",120],["Chicken Noodles",150],
-["Veg Fried Rice",130],["Chicken Fried Rice",160],
-["Burger",120],["Chicken Burger",150],
-["Pizza Veg",200],["Pizza Chicken",250],
-["French Fries",100],["Peri Peri Fries",120],
-["Mocktail Blue",140],["Mocktail Red",140],
-["Coke",50],["Sprite",50],
-["Water Bottle",20],
-["Ice Cream Vanilla",80],["Chocolate Ice Cream",90],
-["Brownie",120],["Cake Slice",130],
-["Grilled Chicken",260],["Tandoori Chicken",300],
-["Butter Chicken",260],["Paneer Butter Masala",220],
-["Dal Tadka",150],["Jeera Rice",120],
-["Roti",20],["Butter Naan",40],
-["Garlic Naan",50],["Paratha",40],
-["Chicken Soup",120],["Veg Soup",100],
-["Salad",90],["Fruit Salad",120],
-["Milkshake Chocolate",150],["Milkshake Strawberry",150],
-["Lassi",100],["Cold Coffee",120]
-];
+const menuData={
+"Biryani":[["Chicken Biryani",220],["Mutton Biryani",280],["Egg Biryani",180],["Veg Biryani",160],["Paneer Biryani",190],["Dum Biryani",250],["Fish Biryani",240],["Family Biryani",450]],
+"Veg":[["Paneer Butter Masala",220],["Kadai Paneer",210],["Dal Tadka",150],["Dal Fry",140],["Jeera Rice",120],["Veg Curry",140],["Mushroom Masala",200],["Aloo Gobi",130]],
+"Non-Veg":[["Butter Chicken",260],["Chicken Curry",240],["Mutton Curry",300],["Grilled Chicken",280],["Chicken Masala",250],["Pepper Chicken",260],["Fish Curry",240],["Chicken Roast",270]],
+"Fast Food":[["Veg Burger",120],["Chicken Burger",150],["Veg Pizza",200],["Chicken Pizza",250],["French Fries",100],["Peri Peri Fries",120],["Sandwich",130],["Cheese Sandwich",150]],
+"Cool Drinks":[["Coke",50],["Sprite",50],["Fanta",50],["Water Bottle",20],["Pepsi",50],["Thumbs Up",50],["Lemon Soda",60],["Cold Coffee",120]],
+"Desserts":[["Ice Cream",80],["Chocolate Ice Cream",90],["Brownie",120],["Cake Slice",130],["Gulab Jamun",90],["Rasgulla",90],["Falooda",150],["Fruit Salad",120]],
+"Starters":[["Chicken 65",180],["Chilli Chicken",200],["Dragon Chicken",220],["Chicken Lollipop",240],["Paneer Tikka",160],["Gobi Manchurian",140],["Spring Roll",130],["Chicken Wings",250]]
+};
 
-/* LOAD MENU */
 const menu=document.getElementById("menu");
 
-items.forEach(item=>{
+for(let category in menuData){
+menu.innerHTML+=`<h2>${category}</h2><div class="grid">`;
+
+menuData[category].forEach(item=>{
 menu.innerHTML+=`
 <div class="card">
 <img src="https://source.unsplash.com/300x200/?food,${item[0]}">
@@ -173,9 +221,11 @@ menu.innerHTML+=`
 <p class="price">₹${item[1]}</p>
 <button onclick="addCart('${item[0]}',${item[1]})">Add to Cart</button>
 </div>
-</div>
-`;
+</div>`;
 });
+
+menu.innerHTML+="</div>";
+}
 
 /* CART */
 function addCart(name,price){
@@ -197,6 +247,21 @@ function removeItem(i){
 total-=cart[i].price;
 cart.splice(i,1);
 render();
+}
+
+/* TOGGLE */
+document.getElementById("tableToggle").onchange=function(){
+document.getElementById("tableBox").style.display=this.checked?"block":"none";
+}
+
+/* ORDER */
+function confirmOrder(e){
+e.preventDefault();
+if(cart.length===0){
+alert("Add items first!");
+return;
+}
+alert("Order Confirmed! ₹"+total);
 }
 
 </script>
