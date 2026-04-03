@@ -23,6 +23,7 @@ body{
   justify-content:center;
   align-items:center;
   flex-direction:column;
+  text-align:center;
 }
 .hero h1{font-size:60px;color:gold}
 
@@ -40,16 +41,12 @@ nav a{color:gold;margin:15px;text-decoration:none}
 /* SECTION */
 .section{padding:60px 20px}
 
-/* CATEGORY */
-.category h2{color:gold;margin-top:40px}
-
 /* MENU */
 .menu{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
   gap:20px;
 }
-
 .card{
   background:rgba(255,255,255,0.05);
   border-radius:15px;
@@ -70,7 +67,7 @@ nav a{color:gold;margin:15px;text-decoration:none}
   border-radius:10px;
 }
 
-/* FLOAT CART */
+/* CART */
 .cart{
   position:fixed;
   right:20px;
@@ -78,12 +75,11 @@ nav a{color:gold;margin:15px;text-decoration:none}
   background:#111;
   padding:15px;
   border-radius:15px;
-  width:250px;
+  width:260px;
   max-height:300px;
   overflow:auto;
 }
 .cart h3{color:gold}
-.cart-item{display:flex;justify-content:space-between}
 
 /* FORM */
 .form{
@@ -100,7 +96,6 @@ input,select{
   border:none;
   border-radius:8px;
 }
-
 .btn{
   background:gold;
   padding:10px;
@@ -108,67 +103,30 @@ input,select{
   width:100%;
 }
 
+h2{color:gold;margin-top:40px}
+
 </style>
 </head>
 
 <body>
 
+<!-- HERO -->
 <div class="hero">
 <h1>RK Restaurant</h1>
-<p>Luxury Dining Experience</p>
+<p>Luxury Dining Experience on NH65</p>
 </div>
 
+<!-- NAV -->
 <nav>
 <a href="#menu">Menu</a>
 <a href="#order">Order</a>
 </nav>
 
 <!-- MENU -->
-<div class="section" id="menu">
-
-<h1>🍽️ Premium Menu</h1>
-
-<div class="category">
-<h2>🍛 Biryani</h2>
-<div class="menu">
-<div class="card">
-<img src="https://source.unsplash.com/300x200/?biryani">
-<h3>Chicken Biryani</h3>
-<p>₹220</p>
-<button onclick="addCart('Chicken Biryani',220)">Add</button>
-</div>
-</div>
-</div>
-
-<div class="category">
-<h2>🔥 Starters</h2>
-<div class="menu">
-<div class="card">
-<img src="https://source.unsplash.com/300x200/?chicken-65">
-<h3>Chicken 65</h3>
-<p>₹180</p>
-<button onclick="addCart('Chicken 65',180)">Add</button>
-</div>
-</div>
-</div>
-
-<div class="category">
-<h2>🍔 Fast Food</h2>
-<div class="menu">
-<div class="card">
-<img src="https://source.unsplash.com/300x200/?burger">
-<h3>Burger</h3>
-<p>₹120</p>
-<button onclick="addCart('Burger',120)">Add</button>
-</div>
-</div>
-</div>
-
-</div>
+<div class="section" id="menu"></div>
 
 <!-- ORDER -->
 <div class="section" id="order">
-
 <h1>🧾 Order & Reservation</h1>
 
 <div class="form">
@@ -182,7 +140,7 @@ input,select{
 </select>
 
 <div id="tableBox" style="display:none;">
-<input placeholder="People">
+<input placeholder="No. of People">
 <select><option>Lunch</option><option>Dinner</option></select>
 </div>
 
@@ -200,7 +158,7 @@ input,select{
 
 </div>
 
-<!-- FLOAT CART -->
+<!-- CART -->
 <div class="cart">
 <h3>🛒 Cart</h3>
 <div id="cartItems"></div>
@@ -208,9 +166,97 @@ input,select{
 </div>
 
 <script>
+
 let cart=[];
 let total=0;
 
+/* MENU DATA */
+const menuData = {
+"Biryani 🍛":[
+["Chicken Biryani",220],
+["Mutton Biryani",280],
+["Egg Biryani",180],
+["Veg Biryani",150],
+["Paneer Biryani",190]
+],
+
+"Starters 🔥":[
+["Chicken 65",180],
+["Chicken Lollipop",200],
+["Chicken Wings",220],
+["Paneer Tikka",160],
+["Gobi Manchurian",140],
+["Chilli Chicken",210]
+],
+
+"Fast Food 🍔":[
+["Burger",120],
+["Pizza",250],
+["Sandwich",100],
+["Shawarma",130],
+["French Fries",90],
+["Noodles",150],
+["Fried Rice",160]
+],
+
+"Mocktails 🍹":[
+["Virgin Mojito",120],
+["Blue Lagoon",140],
+["Strawberry Mocktail",150],
+["Mint Cooler",110]
+],
+
+"Cool Drinks 🥤":[
+["Coke",50],
+["Sprite",50],
+["Thumbs Up",50],
+["Pepsi",50]
+],
+
+"Desserts 🍨":[
+["Ice Cream",80],
+["Brownie",120],
+["Cake",150],
+["Falooda",140]
+],
+
+"Veg Main Course 🥗":[
+["Paneer Butter Masala",180],
+["Kaju Curry",220],
+["Dal Tadka",120],
+["Veg Curry",150]
+],
+
+"Non-Veg Main Course 🍗":[
+["Butter Chicken",240],
+["Chicken Curry",220],
+["Mutton Curry",280],
+["Fish Curry",260]
+]
+};
+
+/* RENDER MENU */
+const menuDiv = document.getElementById("menu");
+
+menuDiv.innerHTML = "<h1>🍽️ Premium Menu</h1>";
+
+for(let category in menuData){
+menuDiv.innerHTML += `<h2>${category}</h2><div class="menu">`;
+
+menuData[category].forEach(item=>{
+menuDiv.innerHTML += `
+<div class="card">
+<img src="https://source.unsplash.com/300x200/?food,${item[0]}">
+<h3>${item[0]}</h3>
+<p>₹${item[1]}</p>
+<button onclick="addCart('${item[0]}',${item[1]})">Add</button>
+</div>`;
+});
+
+menuDiv.innerHTML += "</div>";
+}
+
+/* CART */
 function addCart(item,price){
 cart.push({item,price});
 total+=price;
@@ -232,18 +278,21 @@ document.getElementById("cartItems").innerHTML=html;
 document.getElementById("total").innerText=total;
 }
 
+/* TABLE */
 document.getElementById("table").onchange=function(){
 document.getElementById("tableBox").style.display=this.value=="yes"?"block":"none";
 }
 
+/* ORDER */
 function confirmOrder(e){
 e.preventDefault();
 if(cart.length==0){
-alert("Add items!");
+alert("Add items first!");
 return;
 }
-alert("Order Confirmed ₹"+total);
+alert("✅ Order Confirmed!\nTotal ₹"+total);
 }
+
 </script>
 
 </body>
