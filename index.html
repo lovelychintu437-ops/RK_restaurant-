@@ -41,21 +41,40 @@ nav a{color:gold;margin:15px;text-decoration:none}
 /* SECTION */
 .section{padding:60px 20px}
 
+/* CATEGORY TABS */
+.tabs{
+  display:flex;
+  overflow:auto;
+  gap:10px;
+  padding:10px 0;
+}
+.tab{
+  padding:10px 20px;
+  background:#1a1a1a;
+  border-radius:20px;
+  cursor:pointer;
+}
+.tab:hover{background:gold;color:black}
+
 /* MENU */
+.category-section{margin-top:40px}
 .menu{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  display:flex;
+  overflow-x:auto;
   gap:20px;
 }
 .card{
+  min-width:220px;
   background:rgba(255,255,255,0.05);
   border-radius:15px;
   overflow:hidden;
   backdrop-filter:blur(8px);
-  transition:0.3s;
 }
-.card:hover{transform:scale(1.05)}
-.card img{width:100%;height:180px;object-fit:cover}
+.card img{
+  width:100%;
+  height:150px;
+  object-fit:cover;
+}
 .card h3{padding:10px}
 .card p{color:gold;padding:0 10px}
 .card button{
@@ -79,7 +98,6 @@ nav a{color:gold;margin:15px;text-decoration:none}
   max-height:300px;
   overflow:auto;
 }
-.cart h3{color:gold}
 
 /* FORM */
 .form{
@@ -103,9 +121,9 @@ input,select{
   width:100%;
 }
 
-h2{color:gold;margin-top:40px}
-
+h2{color:gold}
 </style>
+
 </head>
 
 <body>
@@ -123,7 +141,23 @@ h2{color:gold;margin-top:40px}
 </nav>
 
 <!-- MENU -->
-<div class="section" id="menu"></div>
+<div class="section" id="menu">
+
+<h1 style="text-align:center">🍽️ Premium Menu</h1>
+
+<div class="tabs">
+<button class="tab" onclick="scrollToCat('biryani')">Biryani</button>
+<button class="tab" onclick="scrollToCat('starters')">Starters</button>
+<button class="tab" onclick="scrollToCat('fastfood')">Fast Food</button>
+<button class="tab" onclick="scrollToCat('drinks')">Drinks</button>
+<button class="tab" onclick="scrollToCat('desserts')">Desserts</button>
+<button class="tab" onclick="scrollToCat('veg')">Veg</button>
+<button class="tab" onclick="scrollToCat('nonveg')">Non-Veg</button>
+</div>
+
+<div id="menuContent"></div>
+
+</div>
 
 <!-- ORDER -->
 <div class="section" id="order">
@@ -172,88 +206,60 @@ let total=0;
 
 /* MENU DATA */
 const menuData = {
-"Biryani 🍛":[
+biryani:[
 ["Chicken Biryani",220],
 ["Mutton Biryani",280],
 ["Egg Biryani",180],
-["Veg Biryani",150],
 ["Paneer Biryani",190]
 ],
-
-"Starters 🔥":[
+starters:[
 ["Chicken 65",180],
 ["Chicken Lollipop",200],
-["Chicken Wings",220],
-["Paneer Tikka",160],
-["Gobi Manchurian",140],
-["Chilli Chicken",210]
+["Paneer Tikka",160]
 ],
-
-"Fast Food 🍔":[
+fastfood:[
 ["Burger",120],
 ["Pizza",250],
-["Sandwich",100],
-["Shawarma",130],
-["French Fries",90],
-["Noodles",150],
-["Fried Rice",160]
+["Noodles",150]
 ],
-
-"Mocktails 🍹":[
-["Virgin Mojito",120],
-["Blue Lagoon",140],
-["Strawberry Mocktail",150],
-["Mint Cooler",110]
-],
-
-"Cool Drinks 🥤":[
+drinks:[
+["Mocktail",140],
 ["Coke",50],
-["Sprite",50],
-["Thumbs Up",50],
-["Pepsi",50]
+["Sprite",50]
 ],
-
-"Desserts 🍨":[
+desserts:[
 ["Ice Cream",80],
-["Brownie",120],
-["Cake",150],
-["Falooda",140]
+["Cake",120]
 ],
-
-"Veg Main Course 🥗":[
+veg:[
 ["Paneer Butter Masala",180],
-["Kaju Curry",220],
-["Dal Tadka",120],
-["Veg Curry",150]
+["Dal Tadka",120]
 ],
-
-"Non-Veg Main Course 🍗":[
+nonveg:[
 ["Butter Chicken",240],
-["Chicken Curry",220],
-["Mutton Curry",280],
-["Fish Curry",260]
+["Mutton Curry",280]
 ]
 };
 
 /* RENDER MENU */
-const menuDiv = document.getElementById("menu");
+const menuContent = document.getElementById("menuContent");
 
-menuDiv.innerHTML = "<h1>🍽️ Premium Menu</h1>";
-
-for(let category in menuData){
-menuDiv.innerHTML += `<h2>${category}</h2><div class="menu">`;
-
-menuData[category].forEach(item=>{
-menuDiv.innerHTML += `
+for(let cat in menuData){
+menuContent.innerHTML += `
+<div class="category-section" id="${cat}">
+<h2>${cat.toUpperCase()}</h2>
+<div class="menu">
+${menuData[cat].map(item=>`
 <div class="card">
 <img src="https://source.unsplash.com/300x200/?food,${item[0]}">
 <h3>${item[0]}</h3>
 <p>₹${item[1]}</p>
 <button onclick="addCart('${item[0]}',${item[1]})">Add</button>
-</div>`;
-});
-
-menuDiv.innerHTML += "</div>";
+</div>
+`).join("")}
+</div>
+</div>
+`;
 }
 
 /* CART */
@@ -276,6 +282,11 @@ html+=`${c.item} ₹${c.price} <button onclick="removeItem(${i})">X</button><br>
 });
 document.getElementById("cartItems").innerHTML=html;
 document.getElementById("total").innerText=total;
+}
+
+/* SCROLL */
+function scrollToCat(id){
+document.getElementById(id).scrollIntoView({behavior:'smooth'});
 }
 
 /* TABLE */
