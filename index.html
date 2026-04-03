@@ -3,121 +3,120 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RK Restaurant | Premium Dining</title>
+<title>RK Restaurant | Ultra Premium</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: #0a0a0a;
-  color: white;
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Poppins',sans-serif;
+  background:#0b0b0b;
+  color:white;
+  scroll-behavior:smooth;
 }
 
 /* HERO */
-.hero {
-  height: 100vh;
-  background: url('https://source.unsplash.com/1600x900/?luxury-restaurant') center/cover;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.hero{
+  height:100vh;
+  background:url('https://source.unsplash.com/1600x900/?fine-dining') center/cover;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
 }
-
-.hero h1 {
-  font-size: 60px;
-  color: gold;
+.hero h1{
+  font-size:60px;
+  color:gold;
 }
-
-.hero p {
-  font-size: 20px;
+.hero p{
+  font-size:20px;
 }
-
-.btn {
-  padding: 12px 25px;
-  background: gold;
-  color: black;
-  border: none;
-  cursor: pointer;
-  margin-top: 15px;
+.btn{
+  background:gold;
+  color:black;
+  padding:12px 25px;
+  border:none;
+  margin-top:15px;
+  cursor:pointer;
+  border-radius:30px;
 }
 
 /* NAV */
-nav {
-  position: sticky;
-  top: 0;
-  background: black;
-  padding: 15px;
-  text-align: center;
+nav{
+  position:sticky;
+  top:0;
+  background:rgba(0,0,0,0.8);
+  backdrop-filter:blur(10px);
+  padding:15px;
+  text-align:center;
 }
-
-nav a {
-  margin: 0 15px;
-  color: gold;
-  text-decoration: none;
+nav a{
+  color:gold;
+  margin:0 15px;
+  text-decoration:none;
 }
 
 /* SECTION */
-.section {
-  padding: 60px 20px;
-  text-align: center;
+.section{
+  padding:70px 20px;
+  text-align:center;
 }
 
 /* MENU */
-.menu {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 25px;
+.menu{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:25px;
+}
+.card{
+  background:rgba(255,255,255,0.05);
+  border-radius:15px;
+  overflow:hidden;
+  transition:0.4s;
+  backdrop-filter:blur(8px);
+}
+.card:hover{
+  transform:scale(1.05);
+}
+.card img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+}
+.card h3{margin:10px}
+.card p{color:gold}
+
+/* FORM */
+form{
+  max-width:400px;
+  margin:auto;
+}
+input,select{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border:none;
+  border-radius:8px;
 }
 
-.card {
-  background: rgba(255,255,255,0.05);
-  border-radius: 15px;
-  overflow: hidden;
-  transition: 0.3s;
+/* RATING */
+.star{
+  font-size:30px;
+  cursor:pointer;
 }
 
-.card:hover {
-  transform: scale(1.05);
+/* ORDER STATUS */
+.status{
+  margin-top:15px;
+  color:lightgreen;
 }
 
-.card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-}
-
-.card h3 {
-  margin: 10px;
-}
-
-.card p {
-  color: gold;
-}
-
-.card button {
-  width: 90%;
-  margin: 10px;
-}
-
-/* FORMS */
-form {
-  max-width: 400px;
-  margin: auto;
-}
-
-input, select {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border: none;
-}
-
-footer {
-  background: black;
-  padding: 20px;
-  text-align: center;
+footer{
+  background:black;
+  padding:20px;
+  text-align:center;
 }
 </style>
 
@@ -128,7 +127,7 @@ footer {
 <!-- HERO -->
 <div class="hero">
   <h1>RK Restaurant</h1>
-  <p>Luxury Dining Experience</p>
+  <p>Luxury Dining Experience on NH65</p>
   <button class="btn" onclick="scrollToMenu()">Explore Menu</button>
 </div>
 
@@ -138,72 +137,51 @@ footer {
   <a href="#combo">Combos</a>
   <a href="#order">Pre-Order</a>
   <a href="#table">Reserve</a>
+  <a href="#rating">Rating</a>
 </nav>
 
 <!-- MENU -->
 <div class="section" id="menu">
-<h2>Our Premium Menu</h2>
+<h2>🍽️ Premium Menu</h2>
 
-<div class="menu">
+<div class="menu" id="menuList"></div>
 
-<div class="card">
-<img src="https://source.unsplash.com/300x200/?biryani">
-<h3>Chicken Biryani</h3>
-<p>₹220</p>
-<button onclick="addOrder('Chicken Biryani')">Order</button>
-</div>
-
-<div class="card">
-<img src="https://source.unsplash.com/300x200/?pizza">
-<h3>Pizza</h3>
-<p>₹250</p>
-<button onclick="addOrder('Pizza')">Order</button>
-</div>
-
-<div class="card">
-<img src="https://source.unsplash.com/300x200/?burger">
-<h3>Burger</h3>
-<p>₹120</p>
-<button onclick="addOrder('Burger')">Order</button>
-</div>
-
-<div class="card">
-<img src="https://source.unsplash.com/300x200/?mocktail">
-<h3>Mocktail</h3>
-<p>₹150</p>
-<button onclick="addOrder('Mocktail')">Order</button>
-</div>
-
-</div>
 </div>
 
 <!-- COMBO -->
 <div class="section" id="combo">
 <h2>🔥 Combo Offers</h2>
-<p>Family Pack: Biryani + Drinks + Dessert ₹599</p>
-<p>Couple Combo: Pizza + Mocktail ₹399</p>
+<p>Family Pack: ₹599</p>
+<p>Couple Combo: ₹399</p>
+<p>Friends Combo: ₹799</p>
 </div>
 
-<!-- PRE ORDER -->
+<!-- ORDER -->
 <div class="section" id="order">
-<h2>Pre-Order (100% Payment)</h2>
+<h2>📦 Pre-Order (100% Advance)</h2>
 
 <form onsubmit="submitOrder(event)">
 <input type="text" id="name" placeholder="Your Name" required>
 <input type="text" id="items" placeholder="Selected Items" required>
+<select id="service">
+<option>Normal Pickup</option>
+<option>🚗 Car Service</option>
+</select>
 <input type="text" placeholder="UPI ID" required>
 <button class="btn">Confirm Order</button>
 </form>
+
+<div class="status" id="orderStatus"></div>
 
 </div>
 
 <!-- TABLE -->
 <div class="section" id="table">
-<h2>Reserve Table</h2>
+<h2>🍴 Table Reservation</h2>
 
 <form onsubmit="bookTable(event)">
 <input type="text" placeholder="Name" required>
-<input type="number" placeholder="People Count" required>
+<input type="number" placeholder="No. of People" required>
 <select>
 <option>Lunch</option>
 <option>Dinner</option>
@@ -214,35 +192,73 @@ footer {
 </div>
 
 <!-- RATING -->
-<div class="section">
-<h2>Customer Ratings ⭐⭐⭐⭐⭐</h2>
-<p>“Best food on NH65!”</p>
-<p>“Amazing service & taste!”</p>
+<div class="section" id="rating">
+<h2>⭐ Rate Us</h2>
+<span class="star" onclick="rate(1)">★</span>
+<span class="star" onclick="rate(2)">★</span>
+<span class="star" onclick="rate(3)">★</span>
+<span class="star" onclick="rate(4)">★</span>
+<span class="star" onclick="rate(5)">★</span>
+<p id="ratingText"></p>
 </div>
 
 <footer>
 <p>📍 Narketpally Highway NH65</p>
 <p>📞 9876543210</p>
+<p>Pre-order: 100% Advance | Walk-in: Cash/UPI/Card</p>
 </footer>
 
 <script>
-function scrollToMenu() {
+
+/* AUTO MENU (50 ITEMS) */
+const foods = [
+"Chicken Biryani","Mutton Biryani","Veg Biryani","Fried Rice","Noodles",
+"Pizza","Burger","Sandwich","Shawarma","Paneer Curry",
+"Butter Chicken","Chicken 65","Chicken Lollipop","Fish Fry",
+"French Fries","Pasta","Ice Cream","Milkshake","Mocktail",
+"Cold Coffee","Tea","Coffee","Cool Drinks","Juices",
+"Brownie","Cake","Soup","Salad","Tandoori Chicken",
+"Paneer Tikka","Egg Curry","Omelette","Rolls","Wraps",
+"Grill Chicken","BBQ","Falooda","Kulfi","Samosa",
+"Pav Bhaji","Chaat","Dosa","Idli","Vada",
+"Upma","Pongal","Meals","Thali","Combo Meal"
+];
+
+const menuDiv = document.getElementById("menuList");
+
+foods.forEach(food=>{
+  menuDiv.innerHTML += `
+  <div class="card">
+    <img src="https://source.unsplash.com/300x200/?food,${food}">
+    <h3>${food}</h3>
+    <p>₹${Math.floor(Math.random()*200+80)}</p>
+    <button class="btn" onclick="addOrder('${food}')">Order</button>
+  </div>`;
+});
+
+/* FUNCTIONS */
+function scrollToMenu(){
   document.getElementById("menu").scrollIntoView();
 }
 
-function addOrder(item) {
+function addOrder(item){
   document.getElementById("items").value += item + ", ";
 }
 
-function submitOrder(e) {
+function submitOrder(e){
   e.preventDefault();
-  alert("Order Confirmed!");
+  document.getElementById("orderStatus").innerText="✅ Order Confirmed | Preparing...";
 }
 
-function bookTable(e) {
+function bookTable(e){
   e.preventDefault();
-  alert("Table Reserved!");
+  alert("🍴 Table Reserved Successfully!");
 }
+
+function rate(star){
+  document.getElementById("ratingText").innerText = "You rated " + star + " ⭐";
+}
+
 </script>
 
 </body>
