@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RK Restaurant</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #111;
+  color: white;
+}
+
+header {
+  background: black;
+  padding: 15px;
+  text-align: center;
+  font-size: 28px;
+  color: gold;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background: #222;
+  padding: 10px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+}
+
+.section {
+  padding: 30px;
+}
+
+.menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: #222;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+button {
+  background: gold;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  cursor: pointer;
+}
+
+form input, form select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.footer {
+  text-align: center;
+  padding: 20px;
+  background: black;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>RK RESTAURANT 🍽️</header>
+
+<nav>
+  <a href="#menu">Menu</a>
+  <a href="#order">Pre-Order</a>
+  <a href="#table">Table Booking</a>
+</nav>
+
+<!-- MENU -->
+<div class="section" id="menu">
+<h2>Menu (50+ Items)</h2>
+
+<div class="menu">
+
+<!-- Sample Items -->
+<div class="card">
+<img src="https://source.unsplash.com/300x200/?biryani">
+<h3>Chicken Biryani</h3>
+<p>₹220</p>
+<button onclick="addOrder('Chicken Biryani')">Order</button>
+</div>
+
+<div class="card">
+<img src="https://source.unsplash.com/300x200/?fried-rice">
+<h3>Fried Rice</h3>
+<p>₹150</p>
+<button onclick="addOrder('Fried Rice')">Order</button>
+</div>
+
+<div class="card">
+<img src="https://source.unsplash.com/300x200/?burger">
+<h3>Burger</h3>
+<p>₹120</p>
+<button onclick="addOrder('Burger')">Order</button>
+</div>
+
+<div class="card">
+<img src="https://source.unsplash.com/300x200/?pizza">
+<h3>Pizza</h3>
+<p>₹250</p>
+<button onclick="addOrder('Pizza')">Order</button>
+</div>
+
+<div class="card">
+<img src="https://source.unsplash.com/300x200/?noodles">
+<h3>Noodles</h3>
+<p>₹140</p>
+<button onclick="addOrder('Noodles')">Order</button>
+</div>
+
+<div class="card">
+<img src="https://source.unsplash.com/300x200/?milkshake">
+<h3>Milkshake</h3>
+<p>₹100</p>
+<button onclick="addOrder('Milkshake')">Order</button>
+</div>
+
+<div class="card">
+<img src="https://source.unsplash.com/300x200/?ice-cream">
+<h3>Ice Cream</h3>
+<p>₹80</p>
+<button onclick="addOrder('Ice Cream')">Order</button>
+</div>
+
+<div class="card">
+<img src="https://source.unsplash.com/300x200/?mocktail">
+<h3>Mocktail</h3>
+<p>₹120</p>
+<button onclick="addOrder('Mocktail')">Order</button>
+</div>
+
+<!-- Add more items similarly to reach 50 -->
+
+</div>
+</div>
+
+<!-- PRE ORDER -->
+<div class="section" id="order">
+<h2>Pre-Order (100% Advance Payment)</h2>
+
+<form onsubmit="submitOrder(event)">
+<input type="text" id="name" placeholder="Your Name" required>
+<input type="text" id="items" placeholder="Selected Items" required>
+<input type="text" placeholder="UPI / Payment ID" required>
+<button type="submit">Confirm Order</button>
+</form>
+
+</div>
+
+<!-- TABLE BOOKING -->
+<div class="section" id="table">
+<h2>Table Reservation</h2>
+
+<form onsubmit="bookTable(event)">
+<input type="text" placeholder="Name" required>
+<input type="number" placeholder="No of People" required>
+<select>
+<option>Lunch</option>
+<option>Dinner</option>
+</select>
+<button type="submit">Reserve Table</button>
+</form>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+<p>📍 Narketpally Highway NH65</p>
+<p>📞 Customer Support: 9876543210</p>
+<p>Payment Rules:</p>
+<p>Pre-order: 100% Advance | Walk-in: Cash / UPI / Card</p>
+</div>
+
+<script>
+function addOrder(item) {
+  document.getElementById("items").value += item + ", ";
+}
+
+function submitOrder(e) {
+  e.preventDefault();
+  alert("Order Placed Successfully!");
+}
+
+function bookTable(e) {
+  e.preventDefault();
+  alert("Table Reserved!");
+}
+</script>
+
+</body>
+</html>
