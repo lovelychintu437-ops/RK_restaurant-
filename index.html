@@ -3,36 +3,120 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RK Restaurant</title>
+<title>RK Restaurant | Premium</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-body{margin:0;font-family:Arial;background:#0a0a0a;color:white}
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:#0b0b0b;
+  color:white;
+}
+
+/* HERO */
+.hero{
+  height:100vh;
+  background:url('https://source.unsplash.com/1600x900/?luxury-restaurant') center/cover;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+}
+.hero h1{font-size:60px;color:gold}
 
 /* NAV */
-nav{text-align:center;background:black;padding:15px}
-nav a{color:gold;margin:10px;text-decoration:none}
+nav{
+  position:sticky;
+  top:0;
+  background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(10px);
+  text-align:center;
+  padding:15px;
+}
+nav a{color:gold;margin:15px;text-decoration:none}
 
 /* SECTION */
-.section{padding:30px}
+.section{padding:60px 20px}
+
+/* CATEGORY */
+.category h2{color:gold;margin-top:40px}
 
 /* MENU */
-.category{margin-top:30px}
-.menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
-.card{background:#1a1a1a;padding:10px;border-radius:10px}
-.card img{width:100%;border-radius:10px}
-button{background:gold;border:none;padding:8px;margin-top:5px;cursor:pointer}
+.menu{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
 
-/* CART */
-.cart{background:#111;padding:15px;border-radius:10px}
-.cart-item{display:flex;justify-content:space-between;margin:5px 0}
+.card{
+  background:rgba(255,255,255,0.05);
+  border-radius:15px;
+  overflow:hidden;
+  backdrop-filter:blur(8px);
+  transition:0.3s;
+}
+.card:hover{transform:scale(1.05)}
+.card img{width:100%;height:180px;object-fit:cover}
+.card h3{padding:10px}
+.card p{color:gold;padding:0 10px}
+.card button{
+  margin:10px;
+  background:gold;
+  border:none;
+  padding:8px;
+  width:90%;
+  border-radius:10px;
+}
+
+/* FLOAT CART */
+.cart{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  background:#111;
+  padding:15px;
+  border-radius:15px;
+  width:250px;
+  max-height:300px;
+  overflow:auto;
+}
+.cart h3{color:gold}
+.cart-item{display:flex;justify-content:space-between}
 
 /* FORM */
-input,select{width:100%;padding:10px;margin:10px 0}
+.form{
+  max-width:400px;
+  margin:auto;
+  background:rgba(255,255,255,0.05);
+  padding:20px;
+  border-radius:15px;
+}
+input,select{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  border:none;
+  border-radius:8px;
+}
+
+.btn{
+  background:gold;
+  padding:10px;
+  border:none;
+  width:100%;
+}
 
 </style>
 </head>
 
 <body>
+
+<div class="hero">
+<h1>RK Restaurant</h1>
+<p>Luxury Dining Experience</p>
+</div>
 
 <nav>
 <a href="#menu">Menu</a>
@@ -42,83 +126,64 @@ input,select{width:100%;padding:10px;margin:10px 0}
 <!-- MENU -->
 <div class="section" id="menu">
 
-<h2>🍽️ MENU</h2>
+<h1>🍽️ Premium Menu</h1>
 
-<!-- BIRYANI -->
 <div class="category">
-<h3>🍛 Biryani</h3>
+<h2>🍛 Biryani</h2>
 <div class="menu">
-<div class="card"><img src="https://source.unsplash.com/200x150/?biryani"><p>Chicken Biryani ₹220</p><button onclick="addCart('Chicken Biryani',220)">Add</button></div>
-<div class="card"><img src="https://source.unsplash.com/200x150/?mutton-biryani"><p>Mutton Biryani ₹280</p><button onclick="addCart('Mutton Biryani',280)">Add</button></div>
+<div class="card">
+<img src="https://source.unsplash.com/300x200/?biryani">
+<h3>Chicken Biryani</h3>
+<p>₹220</p>
+<button onclick="addCart('Chicken Biryani',220)">Add</button>
+</div>
 </div>
 </div>
 
-<!-- STARTERS -->
 <div class="category">
-<h3>🔥 Starters</h3>
+<h2>🔥 Starters</h2>
 <div class="menu">
-<div class="card"><img src="https://source.unsplash.com/200x150/?chicken-65"><p>Chicken 65 ₹180</p><button onclick="addCart('Chicken 65',180)">Add</button></div>
-<div class="card"><img src="https://source.unsplash.com/200x150/?paneer-tikka"><p>Paneer Tikka ₹160</p><button onclick="addCart('Paneer Tikka',160)">Add</button></div>
+<div class="card">
+<img src="https://source.unsplash.com/300x200/?chicken-65">
+<h3>Chicken 65</h3>
+<p>₹180</p>
+<button onclick="addCart('Chicken 65',180)">Add</button>
+</div>
 </div>
 </div>
 
-<!-- FAST FOOD -->
 <div class="category">
-<h3>🍔 Fast Food</h3>
+<h2>🍔 Fast Food</h2>
 <div class="menu">
-<div class="card"><img src="https://source.unsplash.com/200x150/?burger"><p>Burger ₹120</p><button onclick="addCart('Burger',120)">Add</button></div>
-<div class="card"><img src="https://source.unsplash.com/200x150/?pizza"><p>Pizza ₹250</p><button onclick="addCart('Pizza',250)">Add</button></div>
+<div class="card">
+<img src="https://source.unsplash.com/300x200/?burger">
+<h3>Burger</h3>
+<p>₹120</p>
+<button onclick="addCart('Burger',120)">Add</button>
 </div>
-</div>
-
-<!-- DRINKS -->
-<div class="category">
-<h3>🥤 Cool Drinks & Mocktails</h3>
-<div class="menu">
-<div class="card"><img src="https://source.unsplash.com/200x150/?mocktail"><p>Mocktail ₹140</p><button onclick="addCart('Mocktail',140)">Add</button></div>
-<div class="card"><img src="https://source.unsplash.com/200x150/?soft-drink"><p>Cool Drink ₹60</p><button onclick="addCart('Cool Drink',60)">Add</button></div>
-</div>
-</div>
-
-<!-- DESSERT -->
-<div class="category">
-<h3>🍨 Desserts</h3>
-<div class="menu">
-<div class="card"><img src="https://source.unsplash.com/200x150/?icecream"><p>Ice Cream ₹80</p><button onclick="addCart('Ice Cream',80)">Add</button></div>
-<div class="card"><img src="https://source.unsplash.com/200x150/?cake"><p>Cake ₹120</p><button onclick="addCart('Cake',120)">Add</button></div>
 </div>
 </div>
 
 </div>
 
-<!-- ORDER + TABLE -->
+<!-- ORDER -->
 <div class="section" id="order">
 
-<h2>🧾 Order & Reservation</h2>
+<h1>🧾 Order & Reservation</h1>
 
-<!-- CART -->
-<div class="cart">
-<h3>🛒 Your Cart</h3>
-<div id="cartItems"></div>
-<h3>Total: ₹<span id="total">0</span></h3>
-</div>
-
-<!-- FORM -->
+<div class="form">
 <form onsubmit="confirmOrder(event)">
 
-<input type="text" placeholder="Your Name" required>
+<input placeholder="Your Name" required>
 
-<select id="tableOption">
+<select id="table">
 <option value="no">No Table</option>
 <option value="yes">Reserve Table</option>
 </select>
 
 <div id="tableBox" style="display:none;">
-<input type="number" placeholder="No. of People">
-<select>
-<option>Lunch</option>
-<option>Dinner</option>
-</select>
+<input placeholder="People">
+<select><option>Lunch</option><option>Dinner</option></select>
 </div>
 
 <select required>
@@ -128,56 +193,57 @@ input,select{width:100%;padding:10px;margin:10px 0}
 <option>Card</option>
 </select>
 
-<button>Confirm Order</button>
+<button class="btn">Confirm Order</button>
 
 </form>
+</div>
 
 </div>
 
-<script>
+<!-- FLOAT CART -->
+<div class="cart">
+<h3>🛒 Cart</h3>
+<div id="cartItems"></div>
+<h4>Total ₹<span id="total">0</span></h4>
+</div>
 
+<script>
 let cart=[];
 let total=0;
 
 function addCart(item,price){
 cart.push({item,price});
 total+=price;
-renderCart();
+render();
 }
 
-function removeItem(index){
-total-=cart[index].price;
-cart.splice(index,1);
-renderCart();
+function removeItem(i){
+total-=cart[i].price;
+cart.splice(i,1);
+render();
 }
 
-function renderCart(){
+function render(){
 let html="";
 cart.forEach((c,i)=>{
-html+=`<div class="cart-item">
-${c.item} - ₹${c.price}
-<button onclick="removeItem(${i})">X</button>
-</div>`;
+html+=`${c.item} ₹${c.price} <button onclick="removeItem(${i})">X</button><br>`;
 });
 document.getElementById("cartItems").innerHTML=html;
 document.getElementById("total").innerText=total;
 }
 
-document.getElementById("tableOption").addEventListener("change",function(){
-document.getElementById("tableBox").style.display=this.value==="yes"?"block":"none";
-});
+document.getElementById("table").onchange=function(){
+document.getElementById("tableBox").style.display=this.value=="yes"?"block":"none";
+}
 
 function confirmOrder(e){
 e.preventDefault();
-
 if(cart.length==0){
-alert("Add items first!");
+alert("Add items!");
 return;
 }
-
-alert("✅ Order Confirmed!\nTotal: ₹"+total);
+alert("Order Confirmed ₹"+total);
 }
-
 </script>
 
 </body>
