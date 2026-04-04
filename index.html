@@ -48,25 +48,15 @@ nav{
   padding:60px 30px;
 }
 
-/* 🔥 UPDATED GRID (HORIZONTAL ROW) */
+/* 🔥 FIXED GRID (LIKE YOUR REFERENCE IMAGE) */
 .grid{
-  display:flex;
-  gap:20px;
-  overflow-x:auto;
-  padding-bottom:10px;
-}
-.grid::-webkit-scrollbar{
-  height:6px;
-}
-.grid::-webkit-scrollbar-thumb{
-  background:gold;
-  border-radius:10px;
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap:25px;
 }
 
 /* CARD */
 .card{
-  min-width:220px; /* 🔥 important */
-  flex-shrink:0;
   background:#111;
   border-radius:15px;
   overflow:hidden;
@@ -222,7 +212,7 @@ const menu=document.getElementById("menu");
 for(let category in menuData){
 menu.innerHTML+=`
 <div style="margin-bottom:30px;">
-  <h2>${category} →</h2>
+  <h2>${category}</h2>
   <div class="grid">
 `;
 
