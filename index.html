@@ -48,28 +48,25 @@ nav{
   padding:60px 30px;
 }
 
-/* GRID FIXED */
+/* 🔥 UPDATED GRID (HORIZONTAL ROW) */
 .grid{
-  display:grid;
-  grid-template-columns: repeat(4, 1fr);
+  display:flex;
   gap:20px;
+  overflow-x:auto;
+  padding-bottom:10px;
 }
-
-/* RESPONSIVE */
-@media (max-width:900px){
-  .grid{
-    grid-template-columns: repeat(2, 1fr);
-  }
+.grid::-webkit-scrollbar{
+  height:6px;
 }
-@media (max-width:500px){
-  .grid{
-    grid-template-columns: 1fr;
-  }
+.grid::-webkit-scrollbar-thumb{
+  background:gold;
+  border-radius:10px;
 }
 
 /* CARD */
 .card{
-  width:100%;
+  min-width:220px; /* 🔥 important */
+  flex-shrink:0;
   background:#111;
   border-radius:15px;
   overflow:hidden;
@@ -223,7 +220,11 @@ const menuData={
 const menu=document.getElementById("menu");
 
 for(let category in menuData){
-menu.innerHTML+=`<h2>${category}</h2><div class="grid">`;
+menu.innerHTML+=`
+<div style="margin-bottom:30px;">
+  <h2>${category} →</h2>
+  <div class="grid">
+`;
 
 menuData[category].forEach(item=>{
 menu.innerHTML+=`
@@ -237,7 +238,7 @@ menu.innerHTML+=`
 </div>`;
 });
 
-menu.innerHTML+="</div>";
+menu.innerHTML+="</div></div>";
 }
 
 /* CART */
