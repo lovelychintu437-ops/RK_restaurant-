@@ -17,253 +17,220 @@ body{
 
 /* HERO */
 .hero{
-  height:100vh;
+  height:90vh;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
   text-align:center;
-  background:url('https://source.unsplash.com/1600x900/?luxury-restaurant') center/cover;
+  background: radial-gradient(circle,#1a1a1a,#000);
 }
 .hero h1{
-  font-size:70px;
+  font-size:60px;
   color:gold;
 }
 .hero p{
-  font-size:22px;
+  color:#aaa;
 }
 
 /* NAV */
-nav{
+.nav{
   position:sticky;
   top:0;
   background:#000;
   padding:10px;
-  text-align:center;
-  border-bottom:1px solid gold;
+  display:flex;
+  gap:15px;
+  overflow-x:auto;
+  border-bottom:1px solid #222;
+}
+.nav a{
+  color:#ccc;
+  text-decoration:none;
+  white-space:nowrap;
+}
+.nav a:hover{
+  color:gold;
 }
 
 /* SECTION */
 .section{
-  padding:60px 40px;
+  padding:30px;
+}
+h2{
+  border-bottom:1px solid #333;
+  padding-bottom:5px;
 }
 
-/* GRID */
+/* 🔥 PERFECT GRID */
 .grid{
   display:grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 220px));
-  gap:25px;
+  gap:20px;
   justify-content:start;
 }
 
 /* CARD */
 .card{
-  width:220px; /* 🔥 FIX */
+  width:220px;
   background:#111;
-  border-radius:15px;
+  border-radius:12px;
   overflow:hidden;
   transition:0.3s;
-  box-shadow:0 0 10px rgba(255,215,0,0.1);
 }
 .card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 0 20px gold;
+  transform:scale(1.05);
 }
 .card img{
   width:100%;
   height:140px;
   object-fit:cover;
-  background:#222;
 }
 .card-content{
-  padding:15px;
+  padding:10px;
 }
 .price{
   color:gold;
-  margin-bottom:10px;
 }
 
+/* BUTTON */
 button{
   background:#16a34a;
-  border:none;
-  padding:6px 12px;
-  border-radius:6px;
-  cursor:pointer;
   color:white;
+  border:none;
+  padding:6px 10px;
+  border-radius:5px;
+  cursor:pointer;
 }
 
 /* CART */
 .cart{
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  width:260px;
-  background:#111;
-  padding:15px;
-  border-radius:10px;
-}
-
-/* FORM */
-.form{
-  max-width:400px;
-  margin:auto;
   background:#111;
   padding:20px;
-  border-radius:10px;
-}
-input,select{
-  width:100%;
-  padding:10px;
-  margin:10px 0;
-  border:none;
-  border-radius:6px;
+  margin:30px;
+  border-radius:12px;
 }
 
 /* REVIEWS */
-.review{
+.reviews{
   background:#111;
-  padding:15px;
-  margin:10px 0;
-  border-radius:10px;
+  margin:30px;
+  padding:20px;
+  border-radius:12px;
 }
-
-h2{
-  color:gold;
-  margin-bottom:15px;
+.review{
+  background:#222;
+  padding:10px;
+  margin-bottom:10px;
+  border-radius:8px;
 }
 </style>
 </head>
 
 <body>
 
+<!-- HERO -->
 <div class="hero">
-<h1>🍽️ RK Restaurant</h1>
-<p>Luxury Dining • Premium Taste • NH65</p>
+  <h1>🍽️ RK Restaurant</h1>
+  <p>Premium Highway Dining Experience</p>
 </div>
 
-<nav>⭐⭐⭐⭐⭐ Rated Premium Restaurant</nav>
+<!-- NAV -->
+<div class="nav" id="nav"></div>
 
-<div class="section">
-<h1 style="text-align:center;color:gold;">OUR MENU</h1>
+<!-- MENU -->
 <div id="menu"></div>
-</div>
 
-<div class="section">
-<h2>🧾 Pre-Order & Table Reservation</h2>
-
-<div class="form">
-<form onsubmit="confirmOrder(event)">
-
-<label><input type="checkbox" id="preorder"> Pre-Order (100% Advance)</label>
-
-<label><input type="checkbox" id="tableToggle"> Table Reservation</label>
-
-<div id="tableBox" style="display:none;">
-<input placeholder="No. of People">
-<select>
-<option>Lunch</option>
-<option>Dinner</option>
-</select>
-</div>
-
-<select required>
-<option>Payment Method</option>
-<option>UPI</option>
-<option>Cash</option>
-<option>Card</option>
-</select>
-
-<button>Confirm</button>
-
-</form>
-</div>
-</div>
-
-<div class="section">
-<h2>⭐ Customer Reviews</h2>
-<div class="review">⭐⭐⭐⭐⭐ Excellent taste & ambience</div>
-<div class="review">⭐⭐⭐⭐ Best service on highway</div>
-<div class="review">⭐⭐⭐⭐⭐ Worth every rupee</div>
-</div>
-
+<!-- CART -->
 <div class="cart">
-<h3>🛒 Cart</h3>
-<div id="cartItems"></div>
-<h4>Total ₹<span id="total">0</span></h4>
+  <h2>Your Order</h2>
+  <div id="cartItems"></div>
+  <p id="total"></p>
+</div>
+
+<!-- REVIEWS -->
+<div class="reviews">
+  <h2>Customer Reviews</h2>
+  <div class="review">⭐️⭐️⭐️⭐️⭐️ Amazing food!</div>
+  <div class="review">⭐️⭐️⭐️⭐️ Great experience</div>
+  <div class="review">⭐️⭐️⭐️⭐️⭐️ Loved it</div>
 </div>
 
 <script>
 
-let cart=[];
-let total=0;
-
 const menuData={
-"Biryani":[["Chicken Biryani",220],["Mutton Biryani",280],["Egg Biryani",180],["Veg Biryani",160],["Paneer Biryani",190],["Dum Biryani",250],["Fish Biryani",240],["Family Biryani",450]],
-"Veg":[["Paneer Butter Masala",220],["Kadai Paneer",210],["Dal Tadka",150],["Dal Fry",140],["Jeera Rice",120],["Veg Curry",140],["Mushroom Masala",200],["Aloo Gobi",130]],
-"Non-Veg":[["Butter Chicken",260],["Chicken Curry",240],["Mutton Curry",300],["Grilled Chicken",280],["Chicken Masala",250],["Pepper Chicken",260],["Fish Curry",240],["Chicken Roast",270]],
-"Fast Food":[["Veg Burger",120],["Chicken Burger",150],["Veg Pizza",200],["Chicken Pizza",250],["French Fries",100],["Peri Peri Fries",120],["Sandwich",130],["Cheese Sandwich",150]],
-"Cool Drinks":[["Coke",50],["Sprite",50],["Fanta",50],["Water Bottle",20],["Pepsi",50],["Thumbs Up",50],["Lemon Soda",60],["Cold Coffee",120]],
-"Desserts":[["Ice Cream",80],["Chocolate Ice Cream",90],["Brownie",120],["Cake Slice",130],["Gulab Jamun",90],["Rasgulla",90],["Falooda",150],["Fruit Salad",120]],
-"Starters":[["Chicken 65",180],["Chilli Chicken",200],["Dragon Chicken",220],["Chicken Lollipop",240],["Paneer Tikka",160],["Gobi Manchurian",140],["Spring Roll",130],["Chicken Wings",250]]
+"Biryani":["Chicken Biryani","Mutton Biryani","Egg Biryani","Veg Biryani","Paneer Biryani"],
+"Non-Veg":["Butter Chicken","Chicken Curry","Grilled Chicken","Chicken Masala","Fish Curry"],
+"Veg":["Paneer Butter Masala","Dal Fry","Jeera Rice","Veg Curry","Mushroom Masala"],
+"Fast Food":["Burger","Pizza","Fries","Sandwich","Chicken Wings"],
+"Desserts":["Ice Cream","Brownie","Cake","Gulab Jamun","Falooda"],
+"Drinks":["Coke","Sprite","Lemon Soda","Cold Coffee","Milkshake"]
 };
 
+let cart=[];
+
+function updateCart(){
+  let c=document.getElementById("cartItems");
+  let t=document.getElementById("total");
+  c.innerHTML="";
+  let total=0;
+
+  cart.forEach(i=>{
+    c.innerHTML+=`<p>${i.name} - ₹${i.price}</p>`;
+    total+=i.price;
+  });
+
+  t.innerText="Total: ₹"+total;
+}
+
+function add(name,price){
+  cart.push({name,price});
+  updateCart();
+}
+
 const menu=document.getElementById("menu");
+const nav=document.getElementById("nav");
 
-for(let category in menuData){
-menu.innerHTML+=`
-<div style="margin-bottom:40px;">
-  <h2>${category}</h2>
-  <div class="grid">
-`;
+Object.keys(menuData).forEach(cat=>{
 
-menuData[category].forEach(item=>{
-menu.innerHTML+=`
-<div class="card">
-<img src="https://source.unsplash.com/300x200/?food,${item[0]}">
-<div class="card-content">
-<h3>${item[0]}</h3>
-<p class="price">₹${item[1]}</p>
-<button onclick="addCart('${item[0]}',${item[1]})">Add</button>
-</div>
-</div>`;
+  let link=document.createElement("a");
+  link.href="#"+cat;
+  link.innerText=cat;
+  nav.appendChild(link);
+
+  let section=document.createElement("div");
+  section.className="section";
+  section.id=cat;
+
+  let title=document.createElement("h2");
+  title.innerText=cat;
+  section.appendChild(title);
+
+  let grid=document.createElement("div");
+  grid.className="grid";
+
+  menuData[cat].forEach(item=>{
+    let price=Math.floor(120+Math.random()*200);
+
+    let card=document.createElement("div");
+    card.className="card";
+
+    card.innerHTML=`
+      <img src="https://source.unsplash.com/300x200/?food,${item}">
+      <div class="card-content">
+        <h3>${item}</h3>
+        <p class="price">₹${price}</p>
+        <button onclick="add('${item}',${price})">Add</button>
+      </div>
+    `;
+
+    grid.appendChild(card);
+  });
+
+  section.appendChild(grid);
+  menu.appendChild(section);
+
 });
-
-menu.innerHTML+="</div></div>";
-}
-
-function addCart(name,price){
-cart.push({name,price});
-total+=price;
-render();
-}
-
-function render(){
-let html="";
-cart.forEach((c,i)=>{
-html+=`${c.name} ₹${c.price} <button onclick="removeItem(${i})">X</button><br>`;
-});
-document.getElementById("cartItems").innerHTML=html;
-document.getElementById("total").innerText=total;
-}
-
-function removeItem(i){
-total-=cart[i].price;
-cart.splice(i,1);
-render();
-}
-
-document.getElementById("tableToggle").onchange=function(){
-document.getElementById("tableBox").style.display=this.checked?"block":"none";
-}
-
-function confirmOrder(e){
-e.preventDefault();
-if(cart.length===0){
-alert("Add items first!");
-return;
-}
-alert("Order Confirmed! ₹"+total);
-}
 
 </script>
 
