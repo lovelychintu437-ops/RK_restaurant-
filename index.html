@@ -47,6 +47,8 @@ nav{
 .section{
   padding:60px 40px;
 }
+
+/* GRID */
 .grid{
   display:grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 220px));
@@ -56,6 +58,7 @@ nav{
 
 /* CARD */
 .card{
+  width:220px; /* 🔥 FIX */
   background:#111;
   border-radius:15px;
   overflow:hidden;
@@ -80,7 +83,6 @@ nav{
   margin-bottom:10px;
 }
 
-/* BUTTON (better like your reference) */
 button{
   background:#16a34a;
   border:none;
@@ -134,7 +136,6 @@ h2{
 
 <body>
 
-<!-- HERO -->
 <div class="hero">
 <h1>🍽️ RK Restaurant</h1>
 <p>Luxury Dining • Premium Taste • NH65</p>
@@ -142,13 +143,11 @@ h2{
 
 <nav>⭐⭐⭐⭐⭐ Rated Premium Restaurant</nav>
 
-<!-- MENU -->
 <div class="section">
 <h1 style="text-align:center;color:gold;">OUR MENU</h1>
 <div id="menu"></div>
 </div>
 
-<!-- ORDER -->
 <div class="section">
 <h2>🧾 Pre-Order & Table Reservation</h2>
 
@@ -180,7 +179,6 @@ h2{
 </div>
 </div>
 
-<!-- REVIEWS -->
 <div class="section">
 <h2>⭐ Customer Reviews</h2>
 <div class="review">⭐⭐⭐⭐⭐ Excellent taste & ambience</div>
@@ -188,7 +186,6 @@ h2{
 <div class="review">⭐⭐⭐⭐⭐ Worth every rupee</div>
 </div>
 
-<!-- CART -->
 <div class="cart">
 <h3>🛒 Cart</h3>
 <div id="cartItems"></div>
